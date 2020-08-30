@@ -1,7 +1,7 @@
 version: "3"
 services:
   www:
-    build: .
+    build: ./dockerfiles/apache
     ports:
       - "80:80"
     volumes:
@@ -55,7 +55,7 @@ services:
     networks:
       - default
   pgadmin:
-    image: dpage/pgadmin4:latest
+    build: ./dockerfiles/pgadmin
     depends_on:
       - timescale
     restart: always
@@ -63,10 +63,10 @@ services:
       PGADMIN_DEFAULT_EMAIL: kai.rauer@gsits.de
       PGADMIN_DEFAULT_PASSWORD: password1234
       PGADMIN_LISTEN_PORT: 80
-      PGADMIN_SERVER_JSON_FILE: /home/kai/dockertest2/conf/pgadmin/servers.json
     ports:
       - 8080:80
     volumes:
       - /home/kai/pgadmin_data:/var/lib/pgadmin
+      - /home/kai/dockertest2/conf/pgadmin/servers.json:/pgadmin4/servers.json
     networks:
       - default
